@@ -14,11 +14,19 @@ import React from "react"
 
 export default function Vans() {
     const [vans, setVans] = React.useState([])
+
     React.useEffect(() => {
         fetch("/api/vans")
             .then(res => res.json())
+            .then(data => {
+                // You can add your console.log here
+                // It's good practice to return the data so the next .then can use it
+                console.log(JSON.stringify(data.vans, null, 2)); // Using JSON.stringify for better readability as you requested
+                return data;
+            })
             .then(data => setVans(data.vans))
     }, [])
+
 
     const vanElements = vans.map(van => (
         <div key={van.id} className="van-tile">
