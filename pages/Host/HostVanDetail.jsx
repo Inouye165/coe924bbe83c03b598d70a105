@@ -50,37 +50,22 @@ export default function HostVanDetail() {
                     >
                         Details
                     </NavLink>
-
                     <NavLink
                         to="pricing"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
                         Pricing
                     </NavLink>
-
                     <NavLink
                         to="photos"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
                         Photos
                     </NavLink>
-
                 </nav>
-
-                <Outlet />
+                <Outlet context={{ currentVan }} />
             </div>
         </section>
     )
 }
 
-/**
- * Challenge: Add the links for the navbar! Check the 
- * Figma design slide to see what the text is.
- * 
- * Make it so the link style changes to more clearly
- * indicate which route we're currently on.
- * 
- * Remember, "Details" leads to /host/vans/:id, not
- * /host/vans/:id/details, so you'll need to employ a
- * trick we recently learned for that to work.
- */
