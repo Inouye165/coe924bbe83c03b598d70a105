@@ -1,32 +1,26 @@
 import React from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser } from "../api"
-import { useAuth } from "../components/AuthContext"
-
-
 
 export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" })
     const [status, setStatus] = React.useState("idle")
     const [error, setError] = React.useState(null)
-    
+
     const location = useLocation()
     const navigate = useNavigate()
-    const { login } = useAuth()
-    
+    const from = location.state?.from || "/host";
+
     function handleSubmit(e) {
         e.preventDefault()
-        console.log("Submitting with:", loginFormData)
         setStatus("submitting")
         loginUser(loginFormData)
             .then(data => {
-                console.log("Login successful:", data)
                 setError(null)
-                login(data.user)
-                navigate("/host")
+                localStorage.setItem("loggedin", true)
+                navigate(from, { replace: true })
             })
             .catch(err => {
-                console.log("Login failed:", err)
                 setError(err)
             })
             .finally(() => {
@@ -46,14 +40,14 @@ export default function Login() {
         <div className="login-container">
             {
                 location.state?.message &&
-                <h3 className="login-error">{location.state.message}</h3>
+                    <h3 className="login-error">{location.state.message}</h3>
             }
             <h1>Sign in to your account</h1>
             {
                 error?.message &&
-                <h3 className="login-error">{error.message}</h3>
+                    <h3 className="login-error">{error.message}</h3>
             }
-            
+
             <form onSubmit={handleSubmit} className="login-form">
                 <input
                     name="email"
@@ -69,11 +63,11 @@ export default function Login() {
                     placeholder="Password"
                     value={loginFormData.password}
                 />
-                <button 
+                <button
                     disabled={status === "submitting"}
                 >
-                    {status === "submitting" 
-                        ? "Logging in..." 
+                    {status === "submitting"
+                        ? "Logging in..."
                         : "Log in"
                     }
                 </button>
