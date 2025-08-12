@@ -38,5 +38,21 @@ createServer({
             const id = request.params.id
             return schema.vans.findBy({ id, hostId: "123" })
         })
+
+        this.post("/login", (schema, request) => {
+            const { email, password } = JSON.parse(request.requestBody)
+            
+            if (email === "b@b.com" && password === "p123") {
+                return {
+                    user: {
+                        id: "1",
+                        email: "b@b.com",
+                        name: "Bob"
+                    }
+                }
+            } else {
+                return new Response(400, {}, { message: "Invalid credentials" })
+            }
+        })
     }
 })
