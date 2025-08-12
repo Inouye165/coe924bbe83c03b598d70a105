@@ -470,3 +470,10 @@ i[class*='van-type-'] {
     background-color: #161616;
     color: white;
 }
+
+/*** LOGIN PAGE ***/
+.login-first {
+    color: #cc0000;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
